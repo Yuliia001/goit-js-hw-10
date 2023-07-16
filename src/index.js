@@ -1,5 +1,30 @@
-// import axios from "axios";
+import Notiflix from 'notiflix';
+import SlimSelect from 'slim-select';
+import { fetchBreeds } from "./cat-api";
+    
+const refs = {
+    select: document.querySelector('.breed-select'),
+    loader: document.querySelector('.loader'),
+    error: document.querySelector('.error'),
+    catInfo: document.querySelector('.cat-info')
+};
+const { select, loader, error, catInfo } = refs;
 
-axios.defaults.headers.common["x-api-key"] = "live_V44W7mYW5tvarXTpNIUiUrdadDllJNHA9D11rFWWXU1xNvRvQvB553CLeAZMt2et";
-const BASE_URL = 'https://api.thecatapi.com/v1';
-const END_POINT = '/breeds';
+// select.addEventListener('select', fetchBreeds)
+
+fetchBreeds()
+    .then(data => {
+        // select.innerHTML = createMarkup(data);
+        select.insertAdjacentHTML('beforeend', createMarkup(data));
+         console.log(data)
+})
+    .catch(error => {
+        console.log(error)
+    }
+  )
+  
+
+function createMarkup(arr) {
+    return arr.map(({id, name}) => `<option value="${id}">${name}</option>`).join('')
+}
+
