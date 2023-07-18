@@ -19,8 +19,10 @@ fetchBreeds()
             data: options
         });
         loader.style.display = 'none';
-    });
-   
+    })
+    .catch(() => {
+        Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!');
+  });
   
 function createMarkup(arr) {
     return arr.map(({ id, name }) => `<option value="${id}">${name}</option>`).join('');
@@ -32,14 +34,18 @@ function handlerSelectCat(evt) {
 
     fetchCatByBreed(breedIdSelected) 
         .then(data => {
-        if (!data.length) {
+            if (!data.length) {
+            catInfo.innerHTML = '';
             return;
         }
             
-        catInfo.innerHTML = createMarkupInfoCat(data)
+        catInfo.innerHTML = createMarkupInfoCat(data);
         loader.style.display = 'none';
     
-    })
+        })
+        .catch(() => {
+            Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!');
+        });
 }
   
 function createMarkupInfoCat(arr) {
