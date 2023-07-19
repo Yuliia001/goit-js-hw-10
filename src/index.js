@@ -1,5 +1,6 @@
 import Notiflix from 'notiflix';
 import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css';
 import { fetchBreeds, fetchCatByBreed } from "./cat-api";
     
 const refs = {
@@ -9,18 +10,19 @@ const refs = {
 };
 const { select, loader, catInfo } = refs;
 
-select.addEventListener('change', handlerSelectCat)
+select.addEventListener('change', handlerSelectCat);
 
 fetchBreeds()
     .then(data => {
-        const options = createMarkup(data);
+        const markup = createMarkup(data);
+        select.innerHTML = markup;
         new SlimSelect({
-            select: select,
-            data: options
+            select: select
         });
         loader.style.display = 'none';
     })
-    .catch(() => {
+    .catch((error) => {
+        console.log(error);
         Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!');
   });
   
@@ -34,16 +36,16 @@ function handlerSelectCat(evt) {
 
     fetchCatByBreed(breedIdSelected) 
         .then(data => {
-            if (!data.length) {
-            catInfo.innerHTML = '';
-            return;
-        }
+        //     if (!data.length) {
+        //     return;
+        // }
             
         catInfo.innerHTML = createMarkupInfoCat(data);
         loader.style.display = 'none';
     
         })
-        .catch(() => {
+        .catch((error) => {
+            console.log(error);
             Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!');
         });
 }
@@ -57,3 +59,6 @@ function createMarkupInfoCat(arr) {
         .join('')
       
 }
+
+
+
