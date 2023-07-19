@@ -31,33 +31,36 @@ function createMarkup(arr) {
    
 }
 function handlerSelectCat(evt) {
-    loader.style.display = 'block';
     const breedIdSelected = evt.currentTarget.value;
-
+    loader.style.display = 'block'; 
+    select.style.display = 'none';
+    catInfo.style.display = 'none';
+    
     fetchCatByBreed(breedIdSelected) 
         .then(data => {
-        //     if (!data.length) {
-        //     return;
-        // }
-            
+            if (!data.length) {
+            return;
+        }
+         
         catInfo.innerHTML = createMarkupInfoCat(data);
-        loader.style.display = 'none';
+            loader.style.display = 'none';
+            catInfo.style.display = 'block';
     
         })
         .catch((error) => {
             console.log(error);
-            Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!');
-        });
+            Notiflix.Notify.failure('Oops! There is no such breed of cat!');
+        })
 }
+
   
 function createMarkupInfoCat(arr) {
-    return arr.map(({ breed: [{name, description, temperament}], url }) => `
-      <img src="${url}" alt="${name}" width=300>
-      <h2>Порода: ${name} </h2>
-      <p>${description}</p>
-      <p>Темперамент: ${temperament}</p>`)
-        .join('')
-      
+  return arr.map(({ breeds: [{ name, description, temperament }], url }) => `
+    <img src="${url}" alt="${name}" width="300">
+    <h2>Порода: ${name}</h2>
+    <p>${description}</p>
+    <p>Темперамент: ${temperament}</p>`
+  ).join('');
 }
 
 
