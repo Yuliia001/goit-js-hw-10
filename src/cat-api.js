@@ -7,9 +7,6 @@ const END_POINT2 = '/images/search';
 function fetchBreeds(){
     return axios.get(`${BASE_URL}${END_POINT1}`)
         .then(response => {
-        if (resp.status !== 200) {
-            throw new Error(resp.statusText);
-        }
     return response.data;
         })
 }
@@ -17,9 +14,6 @@ function fetchBreeds(){
 function fetchCatByBreed(breedId) {
     return axios.get(`${BASE_URL}${END_POINT2}?breed_ids=${breedId}`)
         .then(response => {
-        if (resp.status !== 200) {
-            throw new Error(resp.statusText);
-        }
     return response.data;
         })  
 }
