@@ -6,14 +6,20 @@ const END_POINT1 = '/breeds';
 const END_POINT2 = '/images/search';
 function fetchBreeds(){
     return axios.get(`${BASE_URL}${END_POINT1}`)
-    .then(response => {
+        .then(response => {
+        if (resp.status !== 200) {
+            throw new Error(resp.statusText);
+        }
     return response.data;
         })
 }
 
 function fetchCatByBreed(breedId) {
     return axios.get(`${BASE_URL}${END_POINT2}?breed_ids=${breedId}`)
-    .then(response => {
+        .then(response => {
+        if (resp.status !== 200) {
+            throw new Error(resp.statusText);
+        }
     return response.data;
         })  
 }

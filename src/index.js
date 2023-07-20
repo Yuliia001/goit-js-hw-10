@@ -39,6 +39,8 @@ function handlerSelectCat(evt) {
     fetchCatByBreed(breedIdSelected) 
         .then(data => {
             if (!data.length) {
+            loader.style.display = 'none'; 
+            Notiflix.Notify.info('Oops! There is no cat of this breed available!');
             return;
         }
          
@@ -49,7 +51,8 @@ function handlerSelectCat(evt) {
         })
         .catch((error) => {
             console.log(error);
-            Notiflix.Notify.failure('Oops! There is no such breed of cat!');
+            loader.style.display = 'none'; 
+            Notiflix.Notify.failure('Unfortunately, this breed of cat is not available, choose some other!');
         })
 }
 
